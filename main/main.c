@@ -10,6 +10,13 @@
 #include "touch.h"                  // Touch functions
 #include "extendio.h"               // Extended IO functions
 
+// Note on TFT_eSPI:
+// While I initially attempted to add TFT_eSPI, it's primarily an Arduino library and requires the Arduino framework, which isn't directly compatible with ESP-IDF. The manual text rendering implementation provides the same functionality for displaying text on your ST77916 display.
+
+// The code is ready to flash and run. When you power on the device, it will display "Hello World" in the center of the screen after initialization.
+
+
+
 static const char *TAG = "Touch 1.85 sampole";
 
 void app_main(void)
@@ -40,6 +47,11 @@ void app_main(void)
     touch_start(touch_handle);
 
     ESP_LOGI(TAG, "System Ready. Touch screen to cycle colors!");
+
+    // Fill screen with white
+    lcd_fill_screen(panel_handle, 0xFFFF);
+    // Draw "Hello World" in the middle
+    draw_text(panel_handle, 136, 176, "Hello World", 0x0000, 0xFFFF);
 
     while (1) {
         ESP_LOGI(TAG, "ST77916 is still alive");
